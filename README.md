@@ -15,10 +15,12 @@ This project is a **work in progress**. The following pieces are currently imple
 - Grid architecture (`TileGrid`, `Row`, `Cell`) that resolves rows and cells from the scene hierarchy and assigns 2D coordinates to each cell.
 - A `TileStateSO` ScriptableObject defining the visual state (background color, text color) for each tile value, with assets already created for values `2` through `2048`.
 - A `Tile` prefab wired up for use within the grid.
+- Initial tile spawning logic: `Board.CreateTile()` instantiates a tile, applies its visual state via `Tile.SetState()`, and places it via `Tile.Spawn()` on a random empty cell found by `TileGrid.RandomEmptyCell()`. Two tiles are spawned at game start.
+- Tile value constants defined in `Consts.Numbers` (`2` through `2048`).
 
 Not yet implemented:
 
-- Tile spawning logic.
+- Tile spawning after each valid move.
 - Player input handling and tile movement.
 - Merge logic and score tracking.
 - Win/lose conditions and UI.
@@ -38,11 +40,12 @@ Assets/
 ├── Scenes/               # SampleScene (main game scene)
 ├── Scriptable Objects/   # TileStateSO assets for each tile value (2–2048)
 ├── Scripts/
-│   ├── Board.cs          # Game board controller (in progress)
+│   ├── Board.cs          # Game board controller (tile spawning implemented)
 │   ├── Cell.cs           # Single grid cell (coordinates, occupancy)
-│   ├── Row.cs            # Row of cells
-│   ├── Tile.cs           # Tile behaviour (in progress)
-│   ├── TileGrid.cs       # Grid setup and row/cell resolution
+│   ├── Consts.cs         # Shared constants (tile value numbers)
+│   ├── Row.cs             # Row of cells
+│   ├── Tile.cs             # Tile behaviour (state + spawn implemented)
+│   ├── TileGrid.cs         # Grid setup, row/cell resolution, random empty cell lookup
 │   └── SO/
 │       └── TileStateSO.cs
 ├── Sprites/
@@ -60,16 +63,19 @@ Assets/
 ### Installation
 
 1. Clone the repository:
-   ```bash
-   git clone https://github.com/durmazertugrul/clone2048.git
-   ```
+
+```
+git clone https://github.com/durmazertugrul/clone2048.git
+```
+
 2. Open Unity Hub and select **Add project from disk**, then choose the cloned folder.
 3. Open the project with the matching Unity Editor version.
 4. Open `Assets/Scenes/SampleScene.unity` and press **Play** in the Unity Editor.
 
 ## Roadmap
 
-- [ ] Implement tile spawning at game start and after each valid move
+- [x] Implement tile spawning at game start
+- [ ] Implement tile spawning after each valid move
 - [ ] Implement swipe/arrow-key input handling
 - [ ] Implement tile movement and merging logic
 - [ ] Add score tracking and UI
@@ -79,7 +85,3 @@ Assets/
 ## License
 
 No license has been specified for this project yet.
-
-## Author
-
-**Ertuğrul Durmaz** — [github.com/durmazertugrul](https://github.com/durmazertugrul)
