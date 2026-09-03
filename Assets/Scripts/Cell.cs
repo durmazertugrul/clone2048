@@ -7,4 +7,7 @@ public class Cell : MonoBehaviour
 
     public bool isEmpty => tile == null;
     public bool isOccupied => tile != null;
+
+
+
 }
