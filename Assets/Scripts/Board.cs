@@ -169,9 +169,60 @@ public class Board : MonoBehaviour
             CreateTile();
         }
 
+        if (CheckGameOver())
+        {
+            GameManager.instance.GameOver();
+        }
        
 
     }
 
-    
+    public void ClearBoard() 
+    {
+        foreach (Cell cell in grid.cells)
+        {
+            cell.tile = null;
+        }
+
+        foreach (Tile tile in tiles)
+        {
+            Destroy(tile.gameObject);
+        }
+
+        tiles.Clear();
+    }
+
+    private bool CheckGameOver()
+    {
+        foreach (Tile tile in tiles) 
+        {
+            Cell upCell = grid.GetAdjacentCell(tile.cell, Vector2Int.up);
+            Cell downCell = grid.GetAdjacentCell(tile.cell, Vector2Int.down);
+            Cell leftCell = grid.GetAdjacentCell(tile.cell, Vector2Int.left);
+            Cell rightCell = grid.GetAdjacentCell(tile.cell, Vector2Int.right);
+
+            if (upCell != null && CanMerge(tile, upCell.tile))
+            {
+                return false;
+            }
+            if (downCell != null && CanMerge(tile, downCell.tile))
+            {
+                return false;
+            }
+            if (leftCell != null && CanMerge(tile, leftCell.tile))
+            {
+                return false;
+            }
+            if (rightCell != null && CanMerge(tile, rightCell.tile))
+            {
+                return false;
+            }
+
+
+        }
+        return true;
+    }
+
+
+
 }
