@@ -7,6 +7,11 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Board board;
 
     public event Action OnGameOver;
+    public event Action<int> OnScoreChanged;
+    public event Action OnBestScoreChanged;
+
+    private int score;
+    private int bestScore;
 
     private void Awake()
     {
@@ -21,8 +26,18 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    private void Start()
+    {
+        NewGame();
+    }
+
+
+
     public void NewGame() 
     {
+        SetScore(0);
+        OnBestScoreChanged?.Invoke();
+
         board.ClearBoard();
         board.CreateTile();
         board.CreateTile();
@@ -38,4 +53,33 @@ public class GameManager : MonoBehaviour
 
     }
 
+    public void IncreaseScore(int points) 
+    {
+        SetScore(score + points);
+    }
+
+    private void SetScore(int score)
+    {
+        this.score = score;
+
+        OnScoreChanged?.Invoke(score);
+
+        SaveBestScore();
+    }
+
+    public int LoadHighScore()
+    {
+        return PlayerPrefs.GetInt(Consts.SaveValues.BEST_SCORE, 0);
+    }
+
+    private void SaveBestScore() 
+    {
+        bestScore = LoadHighScore();
+
+        if(score > bestScore) 
+        {
+            PlayerPrefs.SetInt(Consts.SaveValues.BEST_SCORE, score);
+           
+        }
+    }
 }
