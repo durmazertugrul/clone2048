@@ -8,11 +8,13 @@ Clone2048 recreates the sliding-tile puzzle mechanics of the original 2048 game.
 
 This project is part of a broader personal learning path focused on building small, self-contained clone games (Flappy Bird, Space Invaders, 2048, Match-3) to practice Unity fundamentals before moving on to original game projects.
 
-![Clone2048 gameplay demo](Media/2048gif.gif)
+<p align="center">
+  <img src="Media/2048gif.gif" alt="Clone2048 gameplay demo" />
+</p>
 
 ## Current Status
 
-This project is a **work in progress**. The following pieces are currently implemented:
+All core gameplay is now **complete**. The following pieces are implemented:
 
 - Grid architecture (`TileGrid`, `Row`, `Cell`) that resolves rows and cells from the scene hierarchy and assigns 2D coordinates to each cell.
 - A `TileStateSO` ScriptableObject defining the visual state (background color, text color) for each tile value, with assets already created for values `2` through `2048`.
@@ -23,11 +25,10 @@ This project is a **work in progress**. The following pieces are currently imple
 - Merge logic: `Board.CanMerge()` / `Board.Merge()` combine equal-value tiles, advancing their `TileStateSO` and doubling their value, with a DOTween scale-pulse animation (`Board.AnimateTiles()`).
 - Tile spawning after each valid move: `Board.WaitForChanges()` unlocks merged tiles and spawns a new tile once a move finishes.
 - Tile value constants defined in `Consts.Numbers` (`2` through `2048`).
-
-Not yet implemented:
-
-- Score tracking and UI.
-- Win/lose conditions and UI.
+- Score tracking and score UI, updated as tiles merge.
+- Win condition (reaching the `2048` tile) with a win UI screen.
+- Game-over condition (no valid moves remaining) with a game-over UI screen.
+- Restart functionality to reset the board and start a new run.
 
 ## Tech Stack
 
@@ -85,9 +86,9 @@ git clone https://github.com/durmazertugrul/clone2048.git
 - [x] Implement tile spawning after each valid move
 - [x] Implement swipe/arrow-key input handling
 - [x] Implement tile movement and merging logic
-- [ ] Add score tracking and UI
-- [ ] Add win (2048 tile) and game-over (no valid moves) states
-- [ ] Add restart functionality
+- [x] Add score tracking and UI
+- [x] Add win (2048 tile) and game-over (no valid moves) states
+- [x] Add restart functionality
 
 ## License
 
